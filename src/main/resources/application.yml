@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/auth_db;MODE=MySql
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    initialization-mode: ALWAYS
+    schema: classpath:schema.sql
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+mybatis:
+  mapper-locations:
+    - /mappers/*.xml
+
+jwt:
+  secret: 90d7617fda42193a20025642e707088b6f32bc2eabc6163fd0ee5aac3070d2751d24ed8cfc68575f6404ed2a0b8a2ba56928ddbd6cebac8ad73c92c8bab2be171bddc71f7b7bc6e0fb7693a6a65f4117ca97bccceb560c2aa2b81498f9f6b046cf06182ecf1eb298c8c68758fded3368215a945ce2ae63feb5ebc960497c7dd6dd58169b76889f9f4360bcc059425882ff319d52bc173f303ea2852a34ff56488516958a7b309349269231e8c401a280bfde086e8fc8b22f87f2b38582d37b2b1cb038245718a0e5fbc6a8194f1ec48115407a0203debe0333988b23f59d801f29d9bc71f513d02b245677fb9a7955914283243187f363d77d4f0fb753b65d56
