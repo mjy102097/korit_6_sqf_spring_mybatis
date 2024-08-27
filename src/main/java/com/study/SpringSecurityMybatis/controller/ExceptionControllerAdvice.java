@@ -23,8 +23,13 @@ public class ExceptionControllerAdvice {
         return ResponseEntity.internalServerError().body(e.getMessage()); // internalServerError가 500에러(서버에러)
     }
 
-    @ExceptionHandler({UsernameNotFoundException.class, BadCredentialsException.class})
+    @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<?> authenticationException(AuthenticationException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<?> BadException(BadCredentialsException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

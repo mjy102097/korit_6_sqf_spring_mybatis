@@ -1,6 +1,8 @@
 package com.study.SpringSecurityMybatis.security.jwt;
 
 import com.study.SpringSecurityMybatis.entity.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -33,5 +35,17 @@ public class JwtProvider {
                 .expiration(getExpireDate()) // 완료시간
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public String removeBearer(String bearerToken) {
+        int bearerLength = "bearer ".length();
+        return bearerToken.substring(bearerLength);
+    }
+
+    public Claims getClaims(String token) {
+        JwtParser jwtParser = Jwts.parser()
+                .setSigningKey(key)
+                .build();
+        return jwtParser.parseClaimsJws(token).getPayload();
     }
 }
