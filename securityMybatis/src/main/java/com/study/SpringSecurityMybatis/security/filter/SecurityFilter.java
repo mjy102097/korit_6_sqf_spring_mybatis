@@ -1,5 +1,6 @@
 package com.study.SpringSecurityMybatis.security.filter;
 
+
 import com.study.SpringSecurityMybatis.entity.User;
 import com.study.SpringSecurityMybatis.repository.UserMapper;
 import com.study.SpringSecurityMybatis.security.jwt.JwtProvider;
@@ -17,10 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Component
-public class JwtAccessTokenFilter extends GenericFilter {
+public class SecurityFilter extends GenericFilter {
 
     @Autowired
     private JwtProvider jwtProvider;
+
     @Autowired
     private UserMapper userMapper;
 
@@ -29,12 +31,10 @@ public class JwtAccessTokenFilter extends GenericFilter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
         String bearerAccessToken = request.getHeader("Authorization");
-
-        if(bearerAccessToken == null || bearerAccessToken.isBlank()) { // null이거나 비었으면
+        if(bearerAccessToken == null || bearerAccessToken.isBlank()) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-
         String accessToken = jwtProvider.removeBearer(bearerAccessToken);
         Claims claims = null;
         try {
@@ -42,17 +42,16 @@ public class JwtAccessTokenFilter extends GenericFilter {
             Long userId = ((Integer) claims.get("userId")).longValue();
             User user = userMapper.findById(userId);
             if(user == null) {
-                throw new JwtException("해당 ID("+userId + ")의 사용자 정보를 찾지 못했습니다.");
+                throw new JwtException("해당 ID(" + userId + ")의 사용자 정보를 찾지 못했습니다.");
             }
             PrincipalUser principalUser = user.toPrincipal();
-            Authentication authentication = new UsernamePasswordAuthenticationToken(principalUser, null, principalUser.getAuthorities());
+            Authentication authentication = new UsernamePasswordAuthenticationToken(principalUser, principalUser.getPassword(), principalUser.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (JwtException e) {
             e.printStackTrace();
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-
 
         filterChain.doFilter(servletRequest, servletResponse);
     }

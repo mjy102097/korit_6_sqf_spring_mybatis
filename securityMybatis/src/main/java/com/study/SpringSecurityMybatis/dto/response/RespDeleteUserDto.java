@@ -7,7 +7,8 @@ import lombok.Data;
 @Builder
 @Data
 public class RespDeleteUserDto {
-    private Boolean isDeleting;
+    private Boolean isDelete;
     private String message;
-    private User deletedUser;
+    private User deleteeduser;
+
 }

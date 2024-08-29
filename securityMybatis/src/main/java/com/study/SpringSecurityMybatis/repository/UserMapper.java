@@ -5,8 +5,10 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
-    User findById(Long id);
     User findByUsername(String username);
+    User findById(Long id);
+
     int save(User user);
-    int deleteByIdInt(Long id);
+    int deleteById(Long id);
+
 }

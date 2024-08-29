@@ -18,13 +18,12 @@ public class PrincipalUser implements UserDetails {
     private Long id;
     private String username;
     private String password;
+    private String name;
     private Set<UserRoles> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(
-                ur -> new SimpleGrantedAuthority(ur.getRole().getName())
-        ).collect(Collectors.toSet());
+        return roles.stream().map(ur -> new SimpleGrantedAuthority(ur.getRole().getName())).collect(Collectors.toSet());
     }
 
     @Override

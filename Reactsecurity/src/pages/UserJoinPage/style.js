@@ -13,7 +13,7 @@ export const logo = css`
     font-size: 24px;
 `;
 
-export const loginInfoBox = css`
+export const joinInfoBox = css`
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
@@ -53,7 +53,7 @@ export const loginInfoBox = css`
     }
 `;
 
-export const loginButton = css`
+export const joinButton = css`
     border: none;
     border-radius: 10px;
     width: 100%;

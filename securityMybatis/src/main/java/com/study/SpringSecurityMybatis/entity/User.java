@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
 public class User {
     private Long id;
@@ -27,6 +27,7 @@ public class User {
                 .id(id)
                 .username(username)
                 .password(password)
+                .name(name)
                 .roles(userRoles)
                 .build();
     }

@@ -3,12 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.study.SpringSecurityMybatis.repository.UserRolesMapper">
-
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into user_roles
-        values(default, #{userId}, #{roleId})
+        values(
+            default,
+            #{userId},
+            #{roleId}
+        )
     </insert>
-
     <delete id="deleteByUserId">
         delete
         from
@@ -16,5 +18,4 @@
         where
             user_id = #{userId}
     </delete>
-
 </mapper>

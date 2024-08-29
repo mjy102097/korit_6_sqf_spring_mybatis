@@ -1,6 +1,6 @@
 package com.study.SpringSecurityMybatis.config;
 
-import com.study.SpringSecurityMybatis.security.filter.JwtAccessTokenFilter;
+import com.study.SpringSecurityMybatis.security.filter.SecurityFilter;
 import com.study.SpringSecurityMybatis.security.handler.AuthenticationHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private JwtAccessTokenFilter jwtAccessTokenFilter;
-    @Autowired
     private AuthenticationHandler authenticationHandler;
 
     @Bean
@@ -26,22 +24,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    private SecurityFilter SecurityFilter;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin().disable();
         http.httpBasic().disable();
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.cors();
-
         http.exceptionHandling().authenticationEntryPoint(authenticationHandler);
-
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
         http.authorizeRequests()
                 .antMatchers("/auth/**", "/h2-console/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
-        http.addFilterBefore(jwtAccessTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(SecurityFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
 }
