@@ -1,6 +1,7 @@
 import { instance } from "./util/instance"
 
-export const signupApi = async (data) => {
+export const signupApi = async (user) => {
+    console.log(user);
     let signupData = {
         isSuccess: false,
         ok: {
@@ -16,7 +17,7 @@ export const signupApi = async (data) => {
     }
 
     try {
-        const response = await instance.post("/auth/signup" ,data);
+        const response = await instance.post("/auth/signup" ,user);
         signupData = {
             isSuccess: true,
             ok: response.data

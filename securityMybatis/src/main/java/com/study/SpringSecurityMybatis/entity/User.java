@@ -20,6 +20,7 @@ public class User {
     private String password;
     private String name;
     private String email;
+    private String img;
     private Set<UserRoles> userRoles;
 
     public PrincipalUser toPrincipal() {

@@ -71,3 +71,44 @@ export const rightBox = css`
         }
     }
 `;
+
+export const userInfoBox = css`
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+`;
+
+export const profileImgBox = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    box-shadow: 0px 0px 2px #00000088;
+    cursor: pointer;
+    overflow: hidden;
+    & > img {
+        height: 100%;
+    }
+`;
+
+export const profileInfo = css`
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    padding: 10px;
+    & > button {
+        box-sizing: border-box;
+        border: 1px solid #dbdbdb;
+        border-radius: 37px;
+        padding: 5px 10px;
+        height: 37px;
+        background-color: #ffffff;
+        color: #555555;
+        font-size: 16px;
+        cursor: pointer;
+    }
+`;

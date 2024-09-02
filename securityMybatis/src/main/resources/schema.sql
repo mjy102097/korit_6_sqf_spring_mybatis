@@ -6,7 +6,8 @@ CREATE TABLE USER (
     username VARCHAR(255) UNIQUE not null,
     password VARCHAR(255) not null,
     name VARCHAR(255) not null,
-    email VARCHAR(255) not null
+    email VARCHAR(255) not null,
+    img TEXT not null DEFAULT 'https://firebasestorage.googleapis.com/v0/b/userprofile-43e23.appspot.com/o/user%2Fdefault.png?alt=media&token=41777104-3675-477d-9abf-b8add3651bb3'
 );
 
 CREATE TABLE ROLE (

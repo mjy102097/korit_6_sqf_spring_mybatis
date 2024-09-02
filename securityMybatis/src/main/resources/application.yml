@@ -16,5 +16,10 @@ mybatis:
   mapper-locations:
     - /mappers/*.xml
 
+user:
+  profile:
+    img:
+      default: https://firebasestorage.googleapis.com/v0/b/userprofile-43e23.appspot.com/o/user%2Fdefault.png?alt=media&token=41777104-3675-477d-9abf-b8add3651bb3
+
 jwt:
   secret: 9cb21b655da6b14914b2e683191cfa274e80124f2beab2f2496ab5d2b6bea599e05e510c8bd68ead46f9f61f60493d951b89af7e28f8533588b1e56853ae458ed8161f645809c45c0bb38de23060c8ea9282aba5466bc4737c99d243a48033231cb0eeee7c69e07a3e59715893ff55c17981f6b18ad0f9cb88e0ec5524faaa1671bf04c90e14eaae63ab551cca6cde7bdc9efc9afecafaa3de23fd3c6862d3272787f23c2970534513d55fb3a93a7e12665ba57b94bf2bb09b78186b9c482a23a96c1673154c8f34ae31a58c08e8aa134df62ca5c8b00f672b42baca82fda2a211a9f8713697715522c339ae915ac4242cb9af29fb56b22051ae04bfc27c2cad

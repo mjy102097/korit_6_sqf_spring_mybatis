@@ -10,6 +10,7 @@
         <result property="password" column="password"/>
         <result property="name" column="name"/>
         <result property="email" column="email"/>
+        <result property="img" column="img"/>
         <collection property="userRoles" javaType="java.util.Set" resultMap="userRolesResultMap"/>
     </resultMap>
 
@@ -32,9 +33,19 @@
             #{username},
             #{password},
             #{name},
-            #{email}
+            #{email},
+            default
         )
     </insert>
+
+    <update id="modifyImgById">
+        update user
+        set
+            img = #{img}
+        where
+            id = #{id}
+    </update>
+
     <delete id="deleteById">
         delete
         from
@@ -49,6 +60,7 @@
             u.password,
             u.name,
             u.email,
+            u.img,
             ur.id as user_roles_id,
             ur.user_id as ur_user_id,
             ur.role_id as ur_role_id,
@@ -68,6 +80,7 @@
             u.password,
             u.name,
             u.email,
+            u.img,
             ur.id as user_roles_id,
             ur.user_id as ur_user_id,
             ur.role_id as ur_role_id,

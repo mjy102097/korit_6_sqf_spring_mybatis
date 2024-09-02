@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { signinApi } from '../../apis/signinApi';
+import { instance } from '../../apis/util/instance';
 
 function UserLoginPage(props) {
+    const navigate = useNavigate();
+
     const [ fieldErrorMessages, setFieldErrorMessages ] = useState({
         username: <></>,
-        password: <></>,
+        password: <></>
     });
 
     const [ inputUser, setInputUser ] = useState({
         username: "",
-        password: "",
+        password: ""
     })
 
     const handleInputUserOnChange = (e) => {
@@ -38,9 +41,23 @@ function UserLoginPage(props) {
             }
             return;
         }
+
         localStorage.setItem("accessToken", "Bearer " + signinData.token.accessToken);
-        // 
-        window.location.replace("/");
+
+        instance.interceptors.request.use(config => {
+            config.headers["Authorization"] = localStorage.getItem("accessToken");
+            return config
+        });
+
+        console.log(window.history.length);
+
+        if(window.history.length > 2) {
+            alert("아! 아! await~!");
+            navigate(-1);
+            return;
+        }
+        
+        navigate("/");
     }
 
     const showFieldErrorMessage = (fieldErrors) => {
@@ -54,6 +71,7 @@ function UserLoginPage(props) {
                 ...EmptyFieldErrors,
                 [fieldError.field]: <p>{fieldError.defaultMessage}</p>
             }
+
         }
 
         setFieldErrorMessages(EmptyFieldErrors);
@@ -62,7 +80,7 @@ function UserLoginPage(props) {
     return (
         <div>
             <div css={s.layout}>
-            <Link to={"/user/login"}><h1 css={s.logo}>LOGO</h1></Link>
+            <Link to={"/"} ><h1 css={s.logo}>LOGO</h1></Link>
             <div css={s.loginInfoBox}>
                 <div>
                     <input type="text" name='username' onChange={handleInputUserOnChange} value={inputUser.username} placeholder='ID' />

@@ -29,7 +29,7 @@ function UserJoinPage(props) {
             [e.target.name]: e.target.value
         }))
     }
-
+   
     const handleJoinSubmitOnClick = async () => {
         const signupData = await signupApi(inputUser);
         if(!signupData.isSuccess) {

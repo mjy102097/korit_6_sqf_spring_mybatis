@@ -1,10 +1,12 @@
 package com.study.SpringSecurityMybatis.service;
 
+import com.study.SpringSecurityMybatis.dto.request.ReqProfileDto;
 import com.study.SpringSecurityMybatis.dto.request.ReqSigninDto;
 import com.study.SpringSecurityMybatis.dto.request.ReqSignupDto;
 import com.study.SpringSecurityMybatis.dto.response.RespDeleteUserDto;
 import com.study.SpringSecurityMybatis.dto.response.RespSigninDto;
 import com.study.SpringSecurityMybatis.dto.response.RespSignupDto;
+import com.study.SpringSecurityMybatis.dto.response.RespUserInfoDto;
 import com.study.SpringSecurityMybatis.entity.Role;
 import com.study.SpringSecurityMybatis.entity.User;
 import com.study.SpringSecurityMybatis.entity.UserRoles;
@@ -16,6 +18,7 @@ import com.study.SpringSecurityMybatis.repository.UserRolesMapper;
 import com.study.SpringSecurityMybatis.security.jwt.JwtProvider;
 import com.study.SpringSecurityMybatis.security.principal.PrincipalUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -28,22 +31,22 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
 
+    @Value("${user.profile.img.default}")
+    private String defaultProfileImg;
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
     @Autowired
     private UserMapper userMapper;
-
     @Autowired
     private RoleMapper roleMapper;
-
     @Autowired
     private UserRolesMapper userRolesMapper;
-
     @Autowired
     private JwtProvider jwtProvider;
 
@@ -118,5 +121,37 @@ public class UserService {
                 .message("사용자 삭제 완료")
                 .deleteeduser(user)
                 .build();
+    }
+
+    public RespUserInfoDto getUserInfo(Long id) {
+        User user = userMapper.findById(id);
+        Set<String> roles = user.getUserRoles().stream().map(
+                userRole -> userRole.getRole().getName()
+        ).collect(Collectors.toSet());
+
+        return RespUserInfoDto.builder()
+                .userid(user.getId())
+                .username(user.getUsername())
+                .name(user.getName())
+                .email(user.getEmail())
+                .img(user.getImg())
+                .roles(roles)
+                .build();
+    }
+
+    public Boolean updateProfileImg(ReqProfileDto dto) {
+        PrincipalUser principalUser =
+                (PrincipalUser) SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getPrincipal();
+        if(dto.getImg() == null || dto.getImg().isBlank()) {
+            userMapper.modifyImgById(principalUser.getId(), defaultProfileImg);
+            return true;
+        }
+
+        userMapper.modifyImgById(principalUser.getId(), dto.getImg());
+        return true;
+
     }
 }
