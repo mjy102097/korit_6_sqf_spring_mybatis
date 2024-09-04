@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { instance } from './apis/util/instance';
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
+import OAuth2JoinPage from './pages/OAuth2JoinPage/OAuth2JoinPage';
+import OAuth2LoginPage from './pages/OAuth2LoginPage/OAuth2LoginPage';
 
 function App() {
 
@@ -77,7 +79,9 @@ function App() {
     <Routes>
       <Route path='/' element={<IndexPage />} />
       <Route path='/user/join' element={<UserJoinPage />} />
+      <Route path='/user/join/oauth2' element={<OAuth2JoinPage />} />
       <Route path='/user/login' element={<UserLoginPage />} />
+      <Route path='/user/login/oauth2' element={<OAuth2LoginPage />} />
       <Route path='/profile' element={<UserProfilePage/>} />
       <Route path='/admin/*' element={<></>} />
       <Route path='/admin/*' element={<h1>Not Found</h1>} />

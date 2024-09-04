@@ -96,6 +96,9 @@ function UserLoginPage(props) {
                 </div>
             </div>
             <button css={s.loginButton} onClick={handleLoginSubmitOnClick}>Login</button>
+            <a href='http://localhost:8080/oauth2/authorization/google'>구글로그인</a>
+            <a href='http://localhost:8080/oauth2/authorization/naver'>네이버로그인</a>
+            <a href='http://localhost:8080/oauth2/authorization/kakao'>카카오로그인</a>
         </div>
         </div>
     );

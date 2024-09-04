@@ -18,6 +18,6 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const fireEgg = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(fireEgg);
-export const storage = getStorage(fireEgg);
+const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+export const storage = getStorage(app);

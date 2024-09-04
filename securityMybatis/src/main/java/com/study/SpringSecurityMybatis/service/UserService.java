@@ -1,5 +1,6 @@
 package com.study.SpringSecurityMybatis.service;
 
+import com.study.SpringSecurityMybatis.dto.request.ReqOAuth2MergeDto;
 import com.study.SpringSecurityMybatis.dto.request.ReqProfileDto;
 import com.study.SpringSecurityMybatis.dto.request.ReqSigninDto;
 import com.study.SpringSecurityMybatis.dto.request.ReqSignupDto;
@@ -7,10 +8,10 @@ import com.study.SpringSecurityMybatis.dto.response.RespDeleteUserDto;
 import com.study.SpringSecurityMybatis.dto.response.RespSigninDto;
 import com.study.SpringSecurityMybatis.dto.response.RespSignupDto;
 import com.study.SpringSecurityMybatis.dto.response.RespUserInfoDto;
+import com.study.SpringSecurityMybatis.entity.OAuth2User;
 import com.study.SpringSecurityMybatis.entity.Role;
 import com.study.SpringSecurityMybatis.entity.User;
 import com.study.SpringSecurityMybatis.entity.UserRoles;
-import com.study.SpringSecurityMybatis.exception.DeleteUserException;
 import com.study.SpringSecurityMybatis.exception.SignupException;
 import com.study.SpringSecurityMybatis.repository.RoleMapper;
 import com.study.SpringSecurityMybatis.repository.UserMapper;
@@ -153,5 +154,14 @@ public class UserService {
         userMapper.modifyImgById(principalUser.getId(), dto.getImg());
         return true;
 
+    }
+
+    public OAuth2User mergeSignin(ReqOAuth2MergeDto dto) {
+        User user = checkUsernameAndPassword(dto.getUsername(), dto.getPassword());
+        return OAuth2User.builder()
+                .userId(user.getId())
+                .oAuth2Name(dto.getOauth2Name())
+                .provider(dto.getProvider())
+                .build();
     }
 }

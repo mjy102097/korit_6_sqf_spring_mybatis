@@ -38,9 +38,6 @@ function UserJoinPage(props) {
         }
         alert(`${signupData.ok.message}`);
         nav("/user/login");
-
-
-        
     }
 
     const showFieldErrorMessage = (fieldErrors) => {
